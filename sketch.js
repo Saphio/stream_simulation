@@ -59,9 +59,9 @@ let state = STOPPED;
 // }
 
 // ORGANISM INFORMATION
-const sensitive = [['Caddisflies', 0], ['Mayflies', 1], ['Stoneflies', 2], ['Riffle Beetles', 3], ['Water Penny Beetles', 4]];
-const mid = [['Dragonflies', 5], ['Craneflies', 6], ['Gill Snails', 7], ['Dobson flies', 8], ['Crayfish', 9]];
-const tolerant = [['Black Flies', 10], ['Midges', 11], ['Worms', 12], ['Lung Snails', 13], ['Leeches', 14], ['Sowbugs', 15]];
+const organisms = [['Caddisflies', 0, 0], ['Mayflies', 1, 0], ['Stoneflies', 2, 0], ['Riffle Beetles', 3, 0], ['Water Penny Beetles', 4, 0],
+									['Dragonflies', 5, 1], ['Craneflies', 6, 1], ['Gill Snails', 7, 1], ['Dobson flies', 8, 1], ['Crayfish', 9, 1],
+									['Black Flies', 10, 2], ['Midges', 11, 2], ['Worms', 12, 2], ['Lung Snails', 13, 2], ['Leeches', 14, 2], ['Sowbugs', 15, 2]];
 let caddisfly, mayfly, stonefly, riffleBeetle, waterPenny, dragonfly, craneFly, gillSnail;
 let dobsonfly, crayfish, blackfly, midge, worm, lungsnail, leech, sowbug;
 
@@ -118,7 +118,9 @@ function draw() {
 		}
 	}
 	repaint();
-	// drawCaddisfly(50, 50);
+	drawCaddisfly(50, 50);
+	drawMayfly(100, 100);
+	drawStonefly(100, 60);
 	return;
 }
 
@@ -239,5 +241,91 @@ function drawCaddisfly (x, y) {
 	vertex(x + 12.5 * dilation, y + 20 * dilation);
 	vertex(x + 12.5 * dilation, y + 12 * dilation);
 	vertex(x + 9 * dilation, y + 17.5 * dilation);
+	endShape(CLOSE);
+}
+
+function drawMayfly (x, y) {
+	fill('#a28150');
+	let dilation = 2;
+	beginShape();
+	vertex(x + 6 * dilation, y + 5 * dilation);
+	vertex(x + 16.5 * dilation, y + 10 * dilation);
+	vertex(x + 17.8 * dilation, y + 9 * dilation);
+	vertex(x + 20 * dilation, y + 7 * dilation);
+	vertex(x + 21  * dilation, y + 8.5 * dilation);
+	vertex(x + 22 * dilation, y + 9 * dilation);
+	vertex(x + 25 * dilation, y + 5 * dilation);
+	vertex(x + 22.2 * dilation, y + 8.2 * dilation);
+	vertex(x + 26 * dilation, y + 8 * dilation);
+	vertex(x + 19.5 * dilation, y + 10 * dilation);
+	vertex(x + 19 * dilation, y + 12 * dilation);
+	vertex(x + 22 * dilation, y + 11 * dilation);
+	vertex(x + 25 * dilation, y + 10 * dilation);
+	vertex(x + 19 * dilation, y + 12 * dilation);
+	vertex(x + 23.5 * dilation, y + 15 * dilation);
+	vertex(x + 19 * dilation, y + 12 * dilation);
+	vertex(x + 15 * dilation, y + 17.5 * dilation);
+	vertex(x + 10 * dilation, y + 20 * dilation);
+	vertex(x + 7 * dilation, y + 19 * dilation);
+	vertex(x + 1 * dilation, y + 19 * dilation);
+	vertex(x + 11 * dilation, y + 17.5 * dilation);
+	vertex(x + 14 * dilation, y + 15 * dilation);
+	vertex(x + 10 * dilation, y + 15 * dilation);
+	vertex(x + 7 * dilation, y + 11 * dilation);
+	endShape(CLOSE);
+}
+
+function drawStonefly (x, y) {
+	fill('#5a5145');
+	let dilation = 2;
+	beginShape();
+	vertex(x + 5 * dilation, y + 17 * dilation);
+	vertex(x + 4 * dilation, y + 17 * dilation);
+	vertex(x + 3 * dilation, y + 15 * dilation);
+	vertex(x + 3.5 * dilation, y + 12 * dilation);
+	vertex(x + 3.3 * dilation, y + 10 * dilation);
+	vertex(x + 2 * dilation, y + 11 * dilation);
+	vertex(x + 1.5 * dilation, y + 14 * dilation);
+	vertex(x + 2 * dilation, y + 11 * dilation);
+	vertex(x + 3.3 * dilation, y + 10 * dilation);
+	vertex(x + 3 * dilation, y + 8 * dilation);
+	vertex(x + 2 * dilation, y + 8.5 * dilation);
+	vertex(x + 1 * dilation, y + 10 * dilation);
+	vertex(x + 2 * dilation, y + 8.5 * dilation);
+	vertex(x + 3 * dilation, y + 8 * dilation);
+	vertex(x + 3.5 * dilation, y + 6.5 * dilation);
+	vertex(x + 3.3 * dilation, y + 5.5 * dilation);
+	vertex(x + 3 * dilation, y + 5 * dilation);
+	vertex(x + 1 * dilation, y + 6.5 * dilation);
+	vertex(x + 3 * dilation, y + 5 * dilation);
+	vertex(x + 3.3 * dilation, y + 5.5 * dilation);
+	vertex(x + 4 * dilation, y + 4 * dilation);
+	vertex(x + 3.5 * dilation, y + 2.5 * dilation);
+	vertex(x + 2.5 * dilation, y + 0.5 * dilation);
+	vertex(x + 3.5 * dilation, y + 2.5 * dilation);
+	vertex(x + 4 * dilation, y + 4 * dilation);
+	vertex(x + 5 * dilation, y + 4 * dilation);
+	vertex(x + 5 * dilation, y + 2 * dilation);
+	vertex(x + 5.5 * dilation, y + 1 * dilation);
+	vertex(x + 5 * dilation, y + 2 * dilation);
+	vertex(x + 5 * dilation, y + 4 * dilation);
+	vertex(x + 5.5 * dilation, y + 4.5 * dilation);
+	vertex(x + 5.5 * dilation, y + 5.5 * dilation);
+	vertex(x + 6.5 * dilation, y + 5 * dilation);
+	vertex(x + 8.5 * dilation, y + 6.5 * dilation);
+	vertex(x + 6.5 * dilation, y + 5 * dilation);
+	vertex(x + 5.5 * dilation, y + 5.5 * dilation);
+	vertex(x + 6 * dilation, y + 7.2 * dilation);
+	vertex(x + 6.5 * dilation, y + 7 * dilation);
+	vertex(x + 8.7 * dilation, y + 10 * dilation);
+	vertex(x + 6.5 * dilation, y + 7 * dilation);
+	vertex(x + 6 * dilation, y + 7.2 * dilation);
+	vertex(x + 6 * dilation, y + 10 * dilation);
+	vertex(x + 7 * dilation, y + 11 * dilation);
+	vertex(x + 7.5 * dilation, y + 14 * dilation);
+	vertex(x + 7 * dilation, y + 11 * dilation);
+	vertex(x + 6 * dilation, y + 10 * dilation);
+	vertex(x + 6 * dilation, y + 13 * dilation);
+	vertex(x + 6.5 * dilation, y + 15 * dilation);
 	endShape(CLOSE);
 }
