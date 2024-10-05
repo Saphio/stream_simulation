@@ -9,6 +9,7 @@
 const HIGH = 2;
 const MODERATE = 1;
 const LOW = 0;
+let pollution;
 // sampling details
 const SAMP_TIME = 60;
 let time = 0;
@@ -41,7 +42,6 @@ let btnOpen;
 const STOPPED = 0;
 const RUNNING = 1;
 const TRAP_OPEN = 2;
-const TRAP_CLOSED = 3;
 let state = STOPPED;
 
 // CLASSES
@@ -59,9 +59,9 @@ let state = STOPPED;
 // }
 
 // ORGANISM INFORMATION
-const organisms = [['Caddisflies', 0, 0], ['Mayflies', 1, 0], ['Stoneflies', 2, 0], ['Riffle Beetles', 3, 0], ['Water Penny Beetles', 4, 0],
-									['Dragonflies', 5, 1], ['Craneflies', 6, 1], ['Gill Snails', 7, 1], ['Dobson flies', 8, 1], ['Crayfish', 9, 1],
-									['Black Flies', 10, 2], ['Midges', 11, 2], ['Worms', 12, 2], ['Lung Snails', 13, 2], ['Leeches', 14, 2], ['Sowbugs', 15, 2]];
+const organisms = [['Caddisflies', 0], ['Mayflies', 0], ['Stoneflies', 0], ['Riffle Beetles', 0], ['Water Penny Beetles', 0],
+									['Dragonflies', 1], ['Craneflies', 1], ['Gill Snails', 1], ['Dobson flies', 1], ['Crayfish', 1],
+									['Black Flies', 2], ['Midges', 2], ['Worms', 2], ['Lung Snails', 2], ['Leeches', 2], ['Sowbugs', 2]];
 let caddisfly, mayfly, stonefly, riffleBeetle, waterPenny, dragonfly, craneFly, gillSnail;
 let dobsonfly, crayfish, blackfly, midge, worm, lungsnail, leech, sowbug;
 
@@ -92,6 +92,7 @@ function setup() {
 	btnOpen.style('height', BTN_HEIGHT * H + 'px')
 	btnOpen.style('width', BTN_WIDTH * W + 'px')
 	btnOpen.mousePressed(openTrap);
+	btnOpen.attribute('disabled', '');
 	
 	// dropdowns
 	selPollution = createSelect();
@@ -152,6 +153,9 @@ function repaint () {
 			rect(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT - i * (BOX_HEIGHT + BOX_PAD) + BTN_PAD), W * BOX_WIDTH, H * BOX_HEIGHT, BOX_CORNER);
 			fill('#fffc9c')
 			rect(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT + (i - 1) * (BOX_HEIGHT + BOX_PAD) + 2 * BTN_PAD), W * BOX_WIDTH, H * BOX_HEIGHT, BOX_CORNER);
+			fill(0);
+			textSize(TEXT_FONT_SIZE);
+			text(organisms[8 * (i - 1) + j - 1][0], W * ((j + 1.5) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT + i * (BOX_HEIGHT + BOX_PAD) - 0.4 * BTN_PAD));
 		}
 	}
 	
@@ -165,9 +169,11 @@ function repaint () {
 // go button
 function go () {
 	console.log('Simulation running.')
-	let pollution = selPollution.selected();
+	pollution = selPollution.selected();
 	if (pollution == 'None' || pollution == 'Moderate' || pollution == 'High') {
 		state = RUNNING;
+		btnGo.style('background-color', '#2dc43f');
+		btnOpen.removeAttribute('disabled');
 	}
 	return;
 }
@@ -179,6 +185,9 @@ function openTrap () {
 		state = TRAP_OPEN;
 		drawTrap();
 		frameRate(15);
+		btnGo.style('background-color', null);
+		btnGo.attribute('disabled', '');
+		btnOpen.style('background-color', '#2dc43f');
 	}
 	return;
 }
@@ -191,6 +200,11 @@ function reset () {
 	species = 0;
 	abundance = 0;
 	frameRate(0);
+	selPollution.selected('None');
+	btnGo.style('background-color', null);
+	btnOpen.style('background-color', null)
+	btnOpen.attribute('disabled', '');
+	btnGo.removeAttribute('disabled');
 	draw();
 	return;
 }
