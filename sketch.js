@@ -122,6 +122,7 @@ function draw() {
 	drawCaddisfly(50, 50);
 	drawMayfly(100, 100);
 	drawStonefly(100, 60);
+	drawRiffleBeetle(200, 200);
 	return;
 }
 
@@ -342,4 +343,61 @@ function drawStonefly (x, y) {
 	vertex(x + 6 * dilation, y + 13 * dilation);
 	vertex(x + 6.5 * dilation, y + 15 * dilation);
 	endShape(CLOSE);
+}
+
+function drawRiffleBeetle (x, y) {
+	fill('#5a5145');
+	let dilation = 2;
+	beginShape();
+	vertex(x + 15 * dilation, y + 8.5 * dilation);
+	vertex(x + 15 * dilation, y + 11.5 * dilation);
+	vertex(x + 12.5 * dilation, y + 12.5 * dilation);
+	vertex(x + 12 * dilation, y + 12.5 * dilation);
+	vertex(x + 12 * dilation, y + 15 * dilation);
+	vertex(x + 14 * dilation, y + 17.5 * dilation);
+	vertex(x + 12 * dilation, y + 15 * dilation);
+	vertex(x + 12 * dilation, y + 12.5 * dilation);
+	vertex(x + 7.5 * dilation, y + 12.5 * dilation);
+	vertex(x + 8 * dilation, y + 17.5 * dilation);
+	vertex(x + 7.5 * dilation, y + 12.5 * dilation);
+	vertex(x + 7 * dilation, y + 11.5 * dilation);
+	vertex(x + 5 * dilation, y + 14 * dilation);
+	vertex(x + 2.5 * dilation, y + 14 * dilation);
+	vertex(x + 5 * dilation, y + 14 * dilation);
+	vertex(x + 7 * dilation, y + 11.5 * dilation);
+	vertex(x + 5 * dilation, y + 11.5 * dilation);
+	vertex(x + 4 * dilation, y + 10.5 * dilation);
+	vertex(x + 2.5 * dilation, y + 11.5 * dilation);
+	vertex(x, y + 11.5 * dilation);
+	vertex(x + 2.5 * dilation, y + 11.5 * dilation);
+	vertex(x + 4 * dilation, y + 10.5 * dilation);
+	vertex(x + 4 * dilation, y + 9.5 * dilation);
+	vertex(x + 2.5 * dilation, y + 8.5 * dilation);
+	vertex(x, y + 8.5 * dilation);
+	vertex(x + 2.5 * dilation, y + 8.5 * dilation);
+	vertex(x + 4 * dilation, y + 9.5 * dilation);
+	vertex(x + 5 * dilation, y + 8.5 * dilation);
+	vertex(x + 7 * dilation, y + 8.5 * dilation);
+	vertex(x + 5 * dilation, y + 6 * dilation);
+	vertex(x + 2.5 * dilation, y + 6 * dilation);
+	vertex(x + 5 * dilation, y + 6 * dilation);
+	vertex(x + 7 * dilation, y + 8.5 * dilation);
+	vertex(x + 7.5 * dilation, y + 7.5 * dilation);
+	vertex(x + 8 * dilation, y + 2.5 * dilation);
+	vertex(x + 7.5 * dilation, y + 7.5 * dilation);
+	vertex(x + 12 * dilation, y + 7.5 * dilation);
+	vertex(x + 12 * dilation, y + 5 * dilation);
+	vertex(x + 14 * dilation, y + 2.5 * dilation);
+	vertex(x + 12 * dilation, y + 5 * dilation);
+	vertex(x + 12 * dilation, y + 7.5 * dilation);
+	vertex(x + 12.5 * dilation, y + 7.5 * dilation);
+	vertex(x + 15 * dilation, y + 8.5 * dilation);
+	endShape(CLOSE);
+}
+
+function drawWaterPenny (x, y) {
+	fill('#7c3622');
+	let dilation = 2;
+	beginShape();
+	vertex(x + 5 * dilation, y + 17 * dilation);
 }
