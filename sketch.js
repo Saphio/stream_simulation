@@ -447,3 +447,77 @@ function drawDragonfly (x, y) {
 	vertex(x + dilation * 11, y + dilation * 5);
 	endShape(CLOSE);
 }
+
+function drawCranefly (x, y) {
+	fill('#705c51');
+	let dilation = 2;
+	beginShape();
+	vertex(x + dilation * 9.5, y + dilation * 9.5);
+	vertex(x + dilation * 9.5, y + dilation * 10.5);
+	vertex(x + dilation * 6.5, y + dilation * 13.5);
+	vertex(x + dilation * 6, y + dilation * 15);
+	vertex(x + dilation * 8, y + dilation * 13.75);
+	vertex(x + dilation * 9.5, y + dilation * 10.75);
+	vertex(x + dilation * 9.5, y + dilation * 14);
+	vertex(x + dilation * 9.85, y + dilation * 15);
+	vertex(x + dilation * 10.15, y + dilation * 15);
+	vertex(x + dilation * 10.5, y + dilation * 14);
+	vertex(x + dilation * 10.5, y + dilation * 10.75);
+	vertex(x + dilation * 12, y + dilation * 13.75);
+	vertex(x + dilation * 14, y + dilation * 15);
+	vertex(x + dilation * 13.5, y + dilation * 13.5);
+	vertex(x + dilation * 10.5, y + dilation * 10.5);
+	vertex(x + dilation * 10.5, y + dilation * 9.5);
+	endShape();
+	line(x + dilation * 9.5, y + dilation * 10.5, x + dilation * 9, y + dilation * 10);
+	line(x + dilation * 9, y + dilation * 10, x + dilation * 7, y + dilation * 5);
+	line(x + dilation * 7, y + dilation * 5, x + dilation * 6, y);
+	line(x + dilation * 10.5, y + dilation * 10.5, x + dilation * 11, y + dilation * 10);
+	line(x + dilation * 11, y + dilation * 10, x + dilation * 13, y + dilation * 5);
+	line(x + dilation * 13, y + dilation * 5, x + dilation * 14, y);
+	line(x + dilation * 9.5, y + dilation * 10.5, x + dilation * 7, y + dilation * 11.5);
+	line(x + dilation * 7, y + dilation * 11.5, x + dilation * 4, y + dilation * 10);
+	line(x + dilation * 4, y + dilation * 10, x + dilation * 0.5, y + dilation * 11);
+	line(x + dilation * 10.5, y + dilation * 10.5, x + dilation * 13, y + dilation * 11.5);
+	line(x + dilation * 13, y + dilation * 11.5, x + dilation * 16, y + dilation * 10);
+	line(x + dilation * 16, y + dilation * 10, x + dilation * 19.5, y + dilation * 11);
+	line(x + dilation * 9.5, y + dilation * 10.5, x + dilation * 8.5, y + dilation * 15);
+	line(x + dilation * 8.5, y + dilation * 15, x + dilation * 5.5, y + dilation * 17);
+	line(x + dilation * 5.5, y + dilation * 17, x + dilation * 5, y + dilation * 20);
+	line(x + dilation * 10.5, y + dilation * 10.5, x + dilation * 11.5, y + dilation * 15);
+	line(x + dilation * 11.5, y + dilation * 15, x + dilation * 14.5, y + dilation * 17);
+	line(x + dilation * 14.5, y + dilation * 17, x + dilation * 15, y + dilation * 20);
+}
+
+function drawGillSnail (x, y) {
+	fill('#8c3416');
+	let dilation = 2;
+	beginShape();
+	vertex(x + dilation * 5, y + dilation * 15);
+	vertex(x + dilation * 5, y + dilation * 9);
+	vertex(x + dilation * 8, y + dilation * 6);
+	vertex(x + dilation * 12, y + dilation * 6);
+	vertex(x + dilation * 15, y + dilation * 9);
+	vertex(x + dilation * 15, y + dilation * 13.5);
+	vertex(x + dilation * 13, y + dilation * 18);
+	vertex(x + dilation * 8.5, y + dilation * 15.5);
+	vertex(x + dilation * 5, y + dilation * 15);
+	endShape(CLOSE);
+	fill('#ecdc74');
+	beginShape();
+	vertex(x + dilation * 8.5, y + dilation * 15.5);
+	vertex(x + dilation * 2, y + dilation * 15);
+	vertex(x, y + dilation * 18.5);
+	vertex(x + dilation * 9, y + dilation * 18.5);
+	vertex(x + dilation * 13, y + dilation * 18.5);
+	vertex(x + dilation * 8.5, y + dilation * 15.5);
+	endShape(CLOSE);
+	line(x + dilation * 8.5, y + dilation * 15.5, x + dilation * 13, y + dilation * 11.5);
+	line(x + dilation * 13, y + dilation * 11.5, x + dilation * 10, y + dilation * 8.5);
+	line(x + dilation * 10, y + dilation * 8.5, x + dilation * 7.5, y + dilation * 9);
+	line(x + dilation * 7.5, y + dilation * 9, x + dilation * 7.75, y + dilation * 12);
+	line(x + dilation * 7.75, y + dilation * 12, x + dilation * 9, y + dilation * 13);
+	line(x + dilation * 9, y + dilation * 13, x + dilation * 10, y + dilation * 11);
+	line(x + dilation * 10, y + dilation * 11, x + dilation * 9, y + dilation * 10);
+	line(x + dilation * 9, y + dilation * 10, x + dilation * 8.75, y + dilation * 11);
+}
