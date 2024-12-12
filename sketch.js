@@ -1,7 +1,7 @@
 /* Biodiversity Ecology - Estimating Stream Diversity Model
  * Adapted from Virtual Lab Biology's Stream Diversity Model Simulation
  * Adapted by Sophia Wang
- * 10.02.2024
+ * 12.12.2024
 */
 
 // CONSTANTS
@@ -45,25 +45,32 @@ const TRAP_OPEN = 2;
 let state = STOPPED;
 
 // CLASSES
-// class Organism {
-// 	// constructor
-// 	constructor (name, id, sensitivity) {
-// 		this.name = name;
-// 		this.id = id;
-// 		this.sensitivity = sensitivity;
-// 	}
-// 	// getters
-// 	name () { return this.name; }
-// 	id () { return this.id; }
-// 	sensitivity () { return this.sensitivity; }
-// }
+class Organism {
+	// constructor
+	constructor (name, sensitivity, display) {
+		this.name = name;
+		this.sensitivity = sensitivity;
+		this.display = display;
+		this.amt = 1;
+		this.coords = [[20, 20]];
+	}
+	// getters
+	getName () { return this.name; }
+	getAmt () { return this.amt; }
+	getSensitivity () { return this.sensitivity; }
+	getCoords(i) { return this.coords[i]; }
+	drawOrganism(x, y) {return this.display(x, y); }
+	// setters
+	setAmt (a) { this.amt = a; }
+}
 
 // ORGANISM INFORMATION
-const organisms = [['Caddisflies', 0], ['Mayflies', 0], ['Stoneflies', 0], ['Riffle Beetles', 0], ['Water Penny Beetles', 0],
-									['Dragonflies', 1], ['Craneflies', 1], ['Gill Snails', 1], ['Dobson flies', 1], ['Crayfish', 1],
-									['Black Flies', 2], ['Midges', 2], ['Worms', 2], ['Lung Snails', 2], ['Leeches', 2], ['Sowbugs', 2]];
+const names = ['Caddisflies', 'Mayflies', 'Stoneflies',  'Riffle Beetles',  'Water Penny Beetles', 
+									 'Dragonflies', 'Craneflies', 'Gill Snails', 'Dobson flies', 'Crayfish',
+									 'Black Flies', 'Midges', 'Worms', 'Lung Snails', 'Leeches', 'Sowbugs'];
 let caddisfly, mayfly, stonefly, riffleBeetle, waterPenny, dragonfly, craneFly, gillSnail;
 let dobsonfly, crayfish, blackfly, midge, worm, lungsnail, leech, sowbug;
+let organisms;
 
 // SETUP
 function setup() {
@@ -105,6 +112,28 @@ function setup() {
 	selPollution.style('height', BTN_HEIGHT * H + 'px')
 	selPollution.style('width', BTN_WIDTH * W + 'px')
 	
+	// organisms
+	caddisfly = new Organism('Caddisfly', 2, drawCaddisfly);
+	mayfly = new Organism('Mayfly', 2, drawMayfly);
+	stonefly = new Organism('Stonefly', 2, drawStonefly);
+	riffleBeetle = new Organism('Riffle Beetle', 2, drawRiffleBeetle)
+	waterPenny = new Organism('Water Penny', 2, drawWaterPenny);
+	dragonfly = new Organism('Dragonfly', 1, drawDragonfly);
+	cranefly = new Organism('Crane fly', 1, drawCranefly);
+	gillSnail = new Organism('Gill snail', 1, drawGillSnail);
+	dobsonfly = new Organism('Dobson fly', 1, drawDobsonfly);
+	crayfish = new Organism('Crayfish', 1, drawCrayfish);
+	blackfly = new Organism('Black fly', 0, drawBlackfly);
+	midge = new Organism('Midge', 0, drawMidge);
+	worm = new Organism('Worm', 0, drawWorm);
+	lungSnail = new Organism('Lung Snail', 0, drawLungSnail);
+	leech = new Organism('Leech', 0, drawLeech);
+	sowbug = new Organism('Sowbug', 0, drawSowbug);
+
+	organisms = [caddisfly, mayfly, stonefly, riffleBeetle, waterPenny,
+										 dragonfly, cranefly, gillSnail, dobsonfly, crayfish,
+										 blackfly, midge, worm, lungSnail, leech, sowbug];
+	
 	repaint();
 	
 	return;
@@ -118,11 +147,24 @@ function draw() {
 			frameRate(0);
 		}
 	}
+	
 	repaint();
-	drawCaddisfly(50, 50);
-	drawMayfly(100, 100);
-	drawStonefly(100, 60);
-	drawRiffleBeetle(200, 200);
+	
+	for (let idx = 0; idx < 16; idx++) {
+		o = organisms[idx];
+		for (let reps = 0; reps < o.getAmt(); reps++) {
+			o.display(o.getCoords(reps)[0], o.getCoords(reps)[1]);
+		}
+	}
+	
+	// drawCaddisfly(50, 50);
+	// drawMayfly(100, 100);
+	// drawStonefly(100, 60);
+	// drawRiffleBeetle(200, 200);
+	// drawWaterPenny(300, 300);
+	// drawDragonfly(400, 400);
+	// drawCranefly(300, 500);
+	// drawGillSnail(250, 250);
 	return;
 }
 
@@ -156,7 +198,7 @@ function repaint () {
 			rect(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT + (i - 1) * (BOX_HEIGHT + BOX_PAD) + 2 * BTN_PAD), W * BOX_WIDTH, H * BOX_HEIGHT, BOX_CORNER);
 			fill(0);
 			textSize(TEXT_FONT_SIZE);
-			text(organisms[8 * (i - 1) + j - 1][0], W * ((j + 1.5) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT + i * (BOX_HEIGHT + BOX_PAD) - 0.4 * BTN_PAD));
+			text(names[8 * (i - 1) + j - 1], W * ((j + 1.5) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT + i * (BOX_HEIGHT + BOX_PAD) - 0.4 * BTN_PAD));
 		}
 	}
 	
@@ -521,3 +563,19 @@ function drawGillSnail (x, y) {
 	line(x + dilation * 10, y + dilation * 11, x + dilation * 9, y + dilation * 10);
 	line(x + dilation * 9, y + dilation * 10, x + dilation * 8.75, y + dilation * 11);
 }
+
+function drawDobsonfly (x, y) {}
+
+function drawCrayfish (x, y) {}
+
+function drawBlackfly (x, y) {}
+
+function drawMidge (x, y) {}
+
+function drawWorm (x, y) {}
+
+function drawLungSnail (x, y) {}
+
+function drawLeech (x, y) {}
+
+function drawSowbug (x, y) {}
