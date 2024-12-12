@@ -397,7 +397,53 @@ function drawRiffleBeetle (x, y) {
 
 function drawWaterPenny (x, y) {
 	fill('#7c3622');
-	let dilation = 2;
+	ellipse(x, y, 20, 16);
+	line(x - 9.5, y + 0.5, x - 15, y + 2.5);
+	line(x - 9.5, y - 0.5, x - 15, y - 2.5);
+}
+
+function drawDragonfly (x, y) {
+	fill('#446c94');
+	let dilation = 2.5;
 	beginShape();
-	vertex(x + 5 * dilation, y + 17 * dilation);
+	vertex(x + dilation * 9.5, y + dilation * 2.5);
+	vertex(x + dilation * 9.25, y + dilation * 3);
+	vertex(x + dilation * 9.5, y + dilation * 3.5);
+	vertex(x + dilation * 9, y + dilation * 5);
+	vertex(x + dilation * 9.5, y + dilation * 7);
+	vertex(x + dilation * 9, y + dilation * 12.5);
+	vertex(x + dilation * 9.5, y + dilation * 17.5);
+	vertex(x + dilation * 10.5, y + dilation * 17.5);
+	vertex(x + dilation * 11, y + dilation * 12.5);
+	vertex(x + dilation * 10.5, y + dilation * 7);
+	vertex(x + dilation * 11, y + dilation * 5);
+	vertex(x + dilation * 10.5, y + dilation * 3.5);
+	vertex(x + dilation * 10.75, y + dilation * 3);
+	vertex(x + dilation * 10.5, y + dilation * 2.5);
+	endShape(CLOSE);
+	fill('#add5dd');
+	beginShape();
+	vertex(x + dilation * 9, y + dilation * 5);
+	vertex(x + dilation * 5, y + dilation * 5);
+	vertex(x + dilation * 2, y + dilation * 5.75);
+	vertex(x + dilation * 2, y + dilation * 6.25);
+	vertex(x + dilation * 5, y + dilation * 7.5);
+	vertex(x + dilation * 4.5, y + dilation * 10);
+	vertex(x + dilation * 5, y + dilation * 11);
+	vertex(x + dilation * 5.5, y + dilation * 10.5);
+	vertex(x + dilation * 9.5, y + dilation * 7);
+	vertex(x + dilation * 9, y + dilation * 5);
+	endShape(CLOSE);
+	beginShape();
+	vertex(x + dilation * 11, y + dilation * 5);
+	vertex(x + dilation * 15, y + dilation * 5);
+	vertex(x + dilation * 18, y + dilation * 5.75);
+	vertex(x + dilation * 18, y + dilation * 6.25);
+	vertex(x + dilation * 15, y + dilation * 7.5);
+	vertex(x + dilation * 15.5, y + dilation * 10);
+	vertex(x + dilation * 15, y + dilation * 11);
+	vertex(x + dilation * 14.5, y + dilation * 10.5);
+	vertex(x + dilation * 10.5, y + dilation * 7);
+	vertex(x + dilation * 11, y + dilation * 5);
+	endShape(CLOSE);
 }
