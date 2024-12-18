@@ -1,7 +1,7 @@
 /* Biodiversity Ecology - Estimating Stream Diversity Model
  * Adapted from Virtual Lab Biology's Stream Diversity Model Simulation
  * Adapted by Sophia Wang
- * 12.18.2024
+ * 12.12.2024
 */
 
 // CONSTANTS
@@ -47,21 +47,38 @@ let state = STOPPED;
 // CLASSES
 class Organism {
 	// constructor
-	constructor (name, sensitivity, display) {
+	constructor (name, sensitivity, display, i) {
 		this.name = name;
 		this.sensitivity = sensitivity;
 		this.display = display;
-		this.amt = 1;
-		this.coords = [[20, 20]];
+		this.amt = 0;
+		this.coords = [];
+		this.boxCoords = [];
+		this.box = [int(i/8), i%8];
 	}
 	// getters
 	getName () { return this.name; }
 	getAmt () { return this.amt; }
 	getSensitivity () { return this.sensitivity; }
-	getCoords(i) { return this.coords[i]; }
-	drawOrganism(x, y) {return this.display(x, y); }
+	getLenCoords () { return this.coords.length; }
+	getCoords (i) { 
+		if (this.coords.length <= i) { return [0, 0]; }
+		else { return this.coords[i]; }
+	}
+	getLenBoxCoords () { return this.boxCoords.length; }
+	getBoxCoords (i) {
+		if (this.boxCoords.length <= i) { return [0, 0]; }
+		return this.boxCoords[i];
+	}
+	drawOrganism (x, y) {return this.display(x, y); }
 	// setters
-	setAmt (a) { this.amt = a; }
+	setAmt (a) { this.amt = a; return; }
+	setCoords (i, l) { this.coords[i] = l; return; }
+	addCoords (l) { this.coords.push(l); return; }
+	setBoxCoords (i, l) { this.boxCoords[i] = l; return; }
+	addBoxCoords (l) { this.boxCoords.push(l); return; }
+	// resetters
+	resetAmts () { this.amt = 0; this.coords = []; this.boxCoords = []; return; }
 }
 
 // ORGANISM INFORMATION
@@ -113,22 +130,22 @@ function setup() {
 	selPollution.style('width', BTN_WIDTH * W + 'px')
 	
 	// organisms
-	caddisfly = new Organism('Caddisfly', 2, drawCaddisfly);
-	mayfly = new Organism('Mayfly', 2, drawMayfly);
-	stonefly = new Organism('Stonefly', 2, drawStonefly);
-	riffleBeetle = new Organism('Riffle Beetle', 2, drawRiffleBeetle)
-	waterPenny = new Organism('Water Penny', 2, drawWaterPenny);
-	dragonfly = new Organism('Dragonfly', 1, drawDragonfly);
-	cranefly = new Organism('Crane fly', 1, drawCranefly);
-	gillSnail = new Organism('Gill snail', 1, drawGillSnail);
-	dobsonfly = new Organism('Dobson fly', 1, drawDobsonfly);
-	crayfish = new Organism('Crayfish', 1, drawCrayfish);
-	blackfly = new Organism('Black fly', 0, drawBlackfly);
-	midge = new Organism('Midge', 0, drawMidge);
-	worm = new Organism('Worm', 0, drawWorm);
-	lungSnail = new Organism('Lung Snail', 0, drawLungSnail);
-	leech = new Organism('Leech', 0, drawLeech);
-	sowbug = new Organism('Sowbug', 0, drawSowbug);
+	caddisfly = new Organism('Caddisfly', 2, drawCaddisfly, 0);
+	mayfly = new Organism('Mayfly', 2, drawMayfly, 1);
+	stonefly = new Organism('Stonefly', 2, drawStonefly, 2);
+	riffleBeetle = new Organism('Riffle Beetle', 2, drawRiffleBeetle, 3)
+	waterPenny = new Organism('Water Penny', 2, drawWaterPenny, 4);
+	dragonfly = new Organism('Dragonfly', 1, drawDragonfly, 5);
+	cranefly = new Organism('Crane fly', 1, drawCranefly, 6);
+	gillSnail = new Organism('Gill snail', 1, drawGillSnail, 7);
+	dobsonfly = new Organism('Dobson fly', 1, drawDobsonfly, 8);
+	crayfish = new Organism('Crayfish', 1, drawCrayfish, 9);
+	blackfly = new Organism('Black fly', 0, drawBlackfly, 10);
+	midge = new Organism('Midge', 0, drawMidge, 11);
+	worm = new Organism('Worm', 0, drawWorm, 12);
+	lungSnail = new Organism('Lung Snail', 0, drawLungSnail, 13);
+	leech = new Organism('Leech', 0, drawLeech, 14);
+	sowbug = new Organism('Sowbug', 0, drawSowbug, 15);
 
 	organisms = [caddisfly, mayfly, stonefly, riffleBeetle, waterPenny,
 										 dragonfly, cranefly, gillSnail, dobsonfly, crayfish,
@@ -147,7 +164,6 @@ function draw() {
 			frameRate(0);
 		}
 	}
-	
 	repaint();
 	return;
 }
@@ -187,13 +203,16 @@ function repaint () {
 	}
 	
 	if (state >= RUNNING) {
+		setCoords();
 		for (let idx = 0; idx < 16; idx++) {
 			o = organisms[idx];
 			for (let reps = 0; reps < o.getAmt(); reps++) {
 				o.display(o.getCoords(reps)[0], o.getCoords(reps)[1]);
 				if (state > RUNNING) {
 					i = o.box[0] + 2; j = o.box[1] + 1;
-					o.display(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT - i * (BOX_HEIGHT + BOX_PAD) + BTN_PAD));
+					// o.display(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH + BOX_WIDTH/2.5) + Math.random() * 10 - 5, 
+										// H * (MAIN_HEIGHT - i * (BOX_HEIGHT + BOX_PAD) + BTN_PAD + BOX_HEIGHT/4) + Math.random() * 5 - 2);
+					o.display(o.getBoxCoords(reps)[0], o.getBoxCoords(reps)[1]);
 				}
 			}
 		}
@@ -202,6 +221,7 @@ function repaint () {
 	if (state > RUNNING) {
 		drawTrap();
 	}
+	return;
 }
 
 
@@ -212,8 +232,12 @@ function go () {
 	pollution = selPollution.selected();
 	if (pollution == 'None' || pollution == 'Moderate' || pollution == 'High') {
 		state = RUNNING;
+		frameRate(5);
 		btnGo.style('background-color', '#2dc43f');
 		btnOpen.removeAttribute('disabled');
+		setAmts(pollution);
+		setCoords();
+		repaint();
 	}
 	return;
 }
@@ -224,7 +248,6 @@ function openTrap () {
 	if (state == RUNNING) {
 		state = TRAP_OPEN;
 		drawTrap();
-		frameRate(15);
 		btnGo.style('background-color', null);
 		btnGo.attribute('disabled', '');
 		btnOpen.style('background-color', '#2dc43f');
@@ -245,6 +268,7 @@ function reset () {
 	btnOpen.style('background-color', null)
 	btnOpen.attribute('disabled', '');
 	btnGo.removeAttribute('disabled');
+	for (let o of organisms) { o.resetAmts(); }
 	draw();
 	return;
 }
@@ -254,23 +278,29 @@ function reset () {
 function setAmts (pollution) {
 	if (pollution == 'None') {
 		for (let o of organisms) {
-			if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 4 + 5)); }
-			else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 3 + 5)); }
-			else { o.setAmt(Math.floor(Math.random() * 4 + 4)); }
+			if (o.getAmt() == 0) {
+				if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 2 + 2)); }
+				else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 1 + 2)); }
+				else { o.setAmt(Math.floor(Math.random() * 2 + 2)); }
+			}			
 		}
 	}
 	else if (pollution == 'Moderate') {
 		for (let o of organisms) {
-			if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 2 + 2)); }
-			else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 3 + 3)); }
-			else { o.setAmt(Math.floor(Math.random() * 5 + 5)); }
+			if (o.getAmt() == 0) {
+				if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 1 + 1)); }
+				else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 1 + 1)); }
+				else { o.setAmt(Math.floor(Math.random() * 2 + 2)); }
+			}
 		}
 	}
 	else if (pollution == 'High') {
 		for (let o of organisms) {
-			if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 1)); }
-			else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 3 + 1)); }
-			else { o.setAmt(Math.floor(Math.random() * 4 + 9)); }
+			if (o.getAmt() == 0) {
+				if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random())); }
+				else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 1)); }
+				else { o.setAmt(Math.floor(Math.random() * 2 + 4)); }
+			}
 		}
 	}
 	else {
@@ -278,6 +308,54 @@ function setAmts (pollution) {
 			o.setAmt(0);
 		}
 	}
+	return;
+}
+
+// coordinates
+function setCoords () {
+	for (let o of organisms) {
+		// simulation coords
+		let diff = o.getAmt() - o.getLenCoords();
+		for (let i = 0; i < o.getAmt() - Math.max(Math.abs(diff)); i++) {
+			// old organisms
+			let l = o.getCoords(i);
+			l[0] += Math.random() * 10 - 5;
+			l[1] += Math.random() * 10 - 5;
+			l[0] = Math.max(l[0], W * BOX_PAD); l[0] = Math.min(l[0], W * MAIN_WIDTH - 1.5 * W * BOX_PAD);
+			l[1] = Math.max(l[1], H * 2 * BOX_PAD); l[1] = Math.min(l[1], H * (MAIN_HEIGHT - 2.5 * BOX_HEIGHT - 2 * BOX_PAD));
+			o.setCoords(i, l);
+		}
+		
+		for (let i = o.getAmt() - diff; i < o.getAmt(); i++) {
+			// new organisms
+			let x = Math.random() * W * MAIN_WIDTH + W * BOX_PAD;
+			let y = Math.random() * H * (MAIN_HEIGHT - 2 * BOX_HEIGHT + BTN_PAD);
+			o.addCoords([x, y]);
+			console.log(o.coords);
+		}
+		// box coords
+		diff = o.getAmt() - o.getLenBoxCoords();
+		let r = o.box[0] + 2; c = o.box[1] + 1;
+		for (let i = 0; i < o.getAmt() - Math.max(Math.abs(diff)); i++) {
+			// old organisms
+			let l = o.getBoxCoords(i);
+			l[0] += Math.random() * 10 - 5;
+			l[1] += Math.random() * 10 - 5;
+			l[0] = Math.max(l[0], W * ((c + 1) * BOX_PAD + (c - 1) * BOX_WIDTH)); 
+			l[0] = Math.min(l[0], W * ((c + 1) * BOX_PAD + (c - 1) * BOX_WIDTH + BOX_WIDTH));
+			l[1] = Math.max(l[1], H * (MAIN_HEIGHT - r * (BOX_HEIGHT + BOX_PAD) + BTN_PAD)); 
+			l[1] = Math.min(l[1], H * (MAIN_HEIGHT - r * (BOX_HEIGHT + BOX_PAD) + BTN_PAD + BOX_HEIGHT));
+			o.setBoxCoords(i, l);
+		}
+		
+		for (let i = o.getAmt() - diff; i < o.getAmt(); i++) {
+			// new organisms
+			let x = W * ((c + 1) * BOX_PAD + (c - 1) * BOX_WIDTH + BOX_WIDTH/2) + Math.random() * W * BOX_WIDTH - W * BOX_WIDTH/2;
+			let y = H * (MAIN_HEIGHT - r * (BOX_HEIGHT + BOX_PAD) + BTN_PAD + BOX_HEIGHT/2) + Math.random() * H * BOX_HEIGHT - H * BOX_HEIGHT/2;
+			o.addBoxCoords([x, y]);
+		}
+	}
+	return;
 }
 
 // DRAWING ORGANISMS/TRAP
@@ -297,11 +375,12 @@ function drawTrap () {
 	line(w - 30, h, w + 30, h);
 	line(w - 30, h - 30, w + 30, h - 20);
 	line(w - 30, h + 30, w + 30, h + 20);
+	return;
 }
 
 function drawCaddisfly (x, y) {
 	fill('#9b734c');
-	let dilation = 2;
+	let dilation = 1.75;
 	beginShape();
 	vertex(x + 3 * dilation, y + 20 * dilation);
 	vertex(x + 2 * dilation, y + 17 * dilation);
@@ -327,11 +406,12 @@ function drawCaddisfly (x, y) {
 	vertex(x + 12.5 * dilation, y + 12 * dilation);
 	vertex(x + 9 * dilation, y + 17.5 * dilation);
 	endShape(CLOSE);
+	return;
 }
 
 function drawMayfly (x, y) {
 	fill('#a28150');
-	let dilation = 2;
+	let dilation = 1.75;
 	beginShape();
 	vertex(x + 6 * dilation, y + 5 * dilation);
 	vertex(x + 16.5 * dilation, y + 10 * dilation);
@@ -358,6 +438,7 @@ function drawMayfly (x, y) {
 	vertex(x + 10 * dilation, y + 15 * dilation);
 	vertex(x + 7 * dilation, y + 11 * dilation);
 	endShape(CLOSE);
+	return;
 }
 
 function drawStonefly (x, y) {
@@ -413,6 +494,7 @@ function drawStonefly (x, y) {
 	vertex(x + 6 * dilation, y + 13 * dilation);
 	vertex(x + 6.5 * dilation, y + 15 * dilation);
 	endShape(CLOSE);
+	return;
 }
 
 function drawRiffleBeetle (x, y) {
@@ -463,6 +545,7 @@ function drawRiffleBeetle (x, y) {
 	vertex(x + 12.5 * dilation, y + 7.5 * dilation);
 	vertex(x + 15 * dilation, y + 8.5 * dilation);
 	endShape(CLOSE);
+	return;
 }
 
 function drawWaterPenny (x, y) {
@@ -471,6 +554,7 @@ function drawWaterPenny (x, y) {
 	ellipse(x, y, 20, 16);
 	line(x - 9.5, y + 0.5, x - 15, y + 2.5);
 	line(x - 9.5, y - 0.5, x - 15, y - 2.5);
+	return;
 }
 
 function drawDragonfly (x, y) {
@@ -517,6 +601,7 @@ function drawDragonfly (x, y) {
 	vertex(x + dilation * 10.5, y + dilation * 7);
 	vertex(x + dilation * 11, y + dilation * 5);
 	endShape(CLOSE);
+	return;
 }
 
 function drawCranefly (x, y) {
@@ -558,6 +643,7 @@ function drawCranefly (x, y) {
 	line(x + dilation * 10.5, y + dilation * 10.5, x + dilation * 11.5, y + dilation * 15);
 	line(x + dilation * 11.5, y + dilation * 15, x + dilation * 14.5, y + dilation * 17);
 	line(x + dilation * 14.5, y + dilation * 17, x + dilation * 15, y + dilation * 20);
+	return;
 }
 
 function drawGillSnail (x, y) {
@@ -591,6 +677,7 @@ function drawGillSnail (x, y) {
 	line(x + dilation * 9, y + dilation * 13, x + dilation * 10, y + dilation * 11);
 	line(x + dilation * 10, y + dilation * 11, x + dilation * 9, y + dilation * 10);
 	line(x + dilation * 9, y + dilation * 10, x + dilation * 8.75, y + dilation * 11);
+	return;
 }
 
 function drawDobsonfly (x, y) {}
