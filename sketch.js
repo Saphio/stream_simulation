@@ -154,6 +154,8 @@ function draw() {
 		o = organisms[idx];
 		for (let reps = 0; reps < o.getAmt(); reps++) {
 			o.display(o.getCoords(reps)[0], o.getCoords(reps)[1]);
+			i = o.box[0] + 2; j = o.box[1] + 1;
+			o.display(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT - i * (BOX_HEIGHT + BOX_PAD) + BTN_PAD));
 		}
 	}
 	
