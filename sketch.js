@@ -1,7 +1,7 @@
 /* Biodiversity Ecology - Estimating Stream Diversity Model
  * Adapted from Virtual Lab Biology's Stream Diversity Model Simulation
  * Adapted by Sophia Wang
- * 12.12.2024
+ * 12.18.2024
 */
 
 // CONSTANTS
@@ -149,24 +149,6 @@ function draw() {
 	}
 	
 	repaint();
-	
-	for (let idx = 0; idx < 16; idx++) {
-		o = organisms[idx];
-		for (let reps = 0; reps < o.getAmt(); reps++) {
-			o.display(o.getCoords(reps)[0], o.getCoords(reps)[1]);
-			i = o.box[0] + 2; j = o.box[1] + 1;
-			o.display(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT - i * (BOX_HEIGHT + BOX_PAD) + BTN_PAD));
-		}
-	}
-	
-	// drawCaddisfly(50, 50);
-	// drawMayfly(100, 100);
-	// drawStonefly(100, 60);
-	// drawRiffleBeetle(200, 200);
-	// drawWaterPenny(300, 300);
-	// drawDragonfly(400, 400);
-	// drawCranefly(300, 500);
-	// drawGillSnail(250, 250);
 	return;
 }
 
@@ -201,6 +183,19 @@ function repaint () {
 			fill(0);
 			textSize(TEXT_FONT_SIZE);
 			text(names[8 * (i - 1) + j - 1], W * ((j + 1.5) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT + i * (BOX_HEIGHT + BOX_PAD) - 0.4 * BTN_PAD));
+		}
+	}
+	
+	if (state >= RUNNING) {
+		for (let idx = 0; idx < 16; idx++) {
+			o = organisms[idx];
+			for (let reps = 0; reps < o.getAmt(); reps++) {
+				o.display(o.getCoords(reps)[0], o.getCoords(reps)[1]);
+				if (state > RUNNING) {
+					i = o.box[0] + 2; j = o.box[1] + 1;
+					o.display(W * ((j + 1) * BOX_PAD + (j - 1) * BOX_WIDTH), H * (MAIN_HEIGHT - i * (BOX_HEIGHT + BOX_PAD) + BTN_PAD));
+				}
+			}
 		}
 	}
 	
@@ -252,6 +247,37 @@ function reset () {
 	btnGo.removeAttribute('disabled');
 	draw();
 	return;
+}
+
+// RANDOMIZATION
+// amounts
+function setAmts (pollution) {
+	if (pollution == 'None') {
+		for (let o of organisms) {
+			if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 4 + 5)); }
+			else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 3 + 5)); }
+			else { o.setAmt(Math.floor(Math.random() * 4 + 4)); }
+		}
+	}
+	else if (pollution == 'Moderate') {
+		for (let o of organisms) {
+			if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 2 + 2)); }
+			else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 3 + 3)); }
+			else { o.setAmt(Math.floor(Math.random() * 5 + 5)); }
+		}
+	}
+	else if (pollution == 'High') {
+		for (let o of organisms) {
+			if (o.sensitivity == 2) { o.setAmt(Math.floor(Math.random() * 1)); }
+			else if (o.sensitivity == 1) { o.setAmt(Math.floor(Math.random() * 3 + 1)); }
+			else { o.setAmt(Math.floor(Math.random() * 4 + 9)); }
+		}
+	}
+	else {
+		for (let o of organisms) {
+			o.setAmt(0);
+		}
+	}
 }
 
 // DRAWING ORGANISMS/TRAP
@@ -440,6 +466,7 @@ function drawRiffleBeetle (x, y) {
 }
 
 function drawWaterPenny (x, y) {
+	x += 19; y += 10;
 	fill('#7c3622');
 	ellipse(x, y, 20, 16);
 	line(x - 9.5, y + 0.5, x - 15, y + 2.5);
