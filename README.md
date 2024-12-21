@@ -1,2 +1,4 @@
-# stream_simulation
-Adaption of the Virtual Biology Labs Biodiversity Ecology Model 2 - Estimating Stream Diversity in p5.js
+# Stream Simulation
+
+## THIS REPO WILL NOT BE UPDATED ANYMORE. 
+Please see the up-to-date repository [here](https://github.com/saphiooo/stream_simulation).
